@@ -13,3 +13,4 @@ class Settings():
 			(self.screen_width, self.screen_height))
 
 		self.first_start_menu = True
+		self.init_lvl1 = True

@@ -6,4 +6,4 @@ class GameStats():
 		self.main_settings = main_settings
 
 		#Set game stat to intro
-		self.game_state = "start menu"
+		self.game_level = 0

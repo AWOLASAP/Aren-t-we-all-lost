@@ -4,6 +4,7 @@ import time
 from time import sleep
 from random import *
 from pygame.locals import *
+from pygame.sprite import Sprite
 
 from MainSettings import Settings
 from StoryDisplay import StoryDisplay
@@ -13,29 +14,41 @@ from Start_Menu import GameLogo
 from Play_Button import PlayButton
 from Credits import Credits
 from Player import Player
+from walls_and_floors import *
+from Lvl_1 import Level1
 
 main_settings = Settings()
 GameStats = GameStats(main_settings)
 StoryLine = StoryLine()
-StoryDisplay =   StoryDisplay(main_settings)
+StoryDisplay = StoryDisplay(main_settings)
 GameLogo = GameLogo()
 PlayButton = PlayButton()
 Credits = Credits()
-Player = Player()
+player = Player(100, 100)
+clock = pygame.time.Clock()
 
 norm_font = pygame.font.SysFont(None, 64)
 large_font = pygame.font.SysFont(None, 128)
 
+sprite_list = pygame.sprite.Group()
+sprite_list.add(player)
 
-def update_screen():
+levels = []
+level = Level1()
+levels.append(level)
+current_level = levels[GameStats.game_level] 
+player.level = current_level
+
+
+def update_game():
     main_settings.screen.fill(main_settings.bg_color)
 
-    if GameStats.game_state == "start menu":
+    if GameStats.game_level == 0:
         show_start_menu()
-    elif GameStats.game_state == "intro to char":
-        play_intro_to_char()
-    elif GameStats.game_state == "level one":
+    elif GameStats.game_level == 1:
         play_level_one()
+
+    clock.tick(60)
 
     pygame.display.flip()
 
@@ -43,22 +56,22 @@ def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
         sys.exit()
     elif event.key == pygame.K_s:
-        GameStats.game_state = "level one"
+        GameStats.game_level += 1
+    elif event.key == pygame.K_b:
+        GameStats.game_level -= 1
     elif event.key == pygame.K_RIGHT:
-        Player.move_right()
-        Player.moving_right = True
+        player.go_right()
     elif event.key == pygame.K_LEFT:
-        Player.move_left()
-        Player.moving_left = True
-    
+        player.go_left() 
+    elif event.key == pygame.K_UP:
+        player.jump()
 
 def check_KEYUP_events(event):
-    if event.key == pygame.K_RIGHT:
-        Player.moving_right = False
-        Player.change_x = 0
-    elif event.key == pygame.K_LEFT:
-        Player.moving_left = False
-        Player.change_x = 0
+    if event.key == pygame.K_LEFT and player.change_x < 0:
+        player.stop()
+    if event.key == pygame.K_RIGHT and player.change_x > 0:
+        player.stop()
+
 def check_events():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -68,15 +81,14 @@ def check_events():
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             check_play_button(mouse_x, mouse_y)
-        if event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYUP:
             check_KEYUP_events(event)
 
 def check_play_button(mouse_x, mouse_y):
     play_button_clicked = PlayButton.rect.collidepoint(mouse_x, mouse_y)
 
-    if play_button_clicked:
-        GameStats.game_state = "intro to char"
-        update_screen()
+    if play_button_clicked and GameStats.game_level == 0:
+        play_intro_to_char()
 
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
         '''Show a str fade in/out'''
@@ -195,18 +207,10 @@ def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_im
         main_settings.screen.blit(new_surf, (0, 0))
         pygame.display.update()
         pygame.time.wait(50)
-    
-def play_intro_to_char():
-    GameStats.game_state = "intro to plot"
-    print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
-    sleep(1.5)
-    print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font, False, False)
-    sleep(1.5)
-    main_settings.screen.fill(main_settings.bg_color)
-    fade_text(StoryLine.intro_to_charTEXT3, 0, 3, 325, 300, large_font, False)
-    sleep(0.5)
-    fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
-    GameStats.game_state = "level one"
+
+def spawn_player(x, y):
+    Player.rect.x = x
+    Player.rect.y = y
 
 def show_start_menu():
     if main_settings.first_start_menu:
@@ -217,9 +221,24 @@ def show_start_menu():
     Credits.blitme()
     GameLogo.blitme()
     PlayButton.blitme()
-    check_events()
+    while GameStats.game_level == 0:
+        check_events()
+
+def play_intro_to_char():
+    GameStats.game_level = 1
+
+    print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
+    sleep(1.5)
+    print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font, False, False)
+    sleep(1.5)
+    main_settings.screen.fill(main_settings.bg_color)
+    fade_text(StoryLine.intro_to_charTEXT3, 0, 3, 325, 300, large_font, False)
+    sleep(0.5)
+    fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
 
 def play_level_one():
-    Player.update()
-    Player.blitme()
     check_events()
+    player.move()
+    current_level.wall_list.draw(main_settings.screen)
+    sprite_list.draw(main_settings.screen)
+    
