@@ -31,14 +31,17 @@ class Player(Sprite):
 	def go_right(self):
 		#User hits right arrow
 		self.change_x = 3
+		self.image = pygame.image.load('Images/Player_Right.bmp')
 
 	def go_left(self):
 		#User hits left arrow
 		self.change_x = -3
+		self.image = pygame.image.load('Images/Player_Left.bmp')
 
 	def stop(self):
 		#User isn't pressing left or right arrow
 		self.change_x = 0
+		self.image = pygame.image.load('Images/Player.bmp')
 
 	def jump(self):
 		"""When the user hits the 'jump' button."""
