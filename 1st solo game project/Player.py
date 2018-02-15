@@ -42,7 +42,7 @@ class Player(Sprite):
 		#User isn't pressing left or right arrow
 		self.change_x = 0
 		self.image = pygame.image.load('Images/Player.bmp')
-
+				
 	def jump(self):
 		"""When the user hits the 'jump' button."""
 
@@ -55,7 +55,7 @@ class Player(Sprite):
 		#If the player was in a block then the player is on a platform;
 		#thus, move the player up
 		if len(block_hit_list) > 0 or self.rect.bottom >= main_settings.screen_height:
-			self.change_y = -3
+			self.change_y = -10
 
 	def calc_grav(self):
 		"""Calculate the effect of gravity"""
@@ -70,9 +70,10 @@ class Player(Sprite):
 
 	def move(self):
 		"""Find a new position for the player. """
-
+		
 		self.calc_grav()
-
+	
+		
 		#Move left/right
 		self.rect.x += self.change_x
 
@@ -100,3 +101,10 @@ class Player(Sprite):
 
 			#Stop our vetical movement
 			self.change_y = 0
+			if self.change_x == 0:
+				self.image = pygame.image.load('Images/Player.bmp')
+			
+		if self.change_y > 1 and self.change_x == 0:
+			self.image = pygame.image.load('Images/Player_Down.bmp')
+		elif self.change_y < 0 and self.change_x == 0:
+			self.image = pygame.image.load('Images/Player_Up.bmp')

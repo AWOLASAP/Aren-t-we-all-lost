@@ -49,7 +49,8 @@ def update_game():
         play_level_one()
 
     clock.tick(60)
-
+    print(clock)
+		
     pygame.display.flip()
 
 def check_KEYDOWN_events(event):
@@ -69,8 +70,9 @@ def check_KEYDOWN_events(event):
 def check_KEYUP_events(event):
     if event.key == pygame.K_LEFT and player.change_x < 0:
         player.stop()
-    if event.key == pygame.K_RIGHT and player.change_x > 0:
+    elif event.key == pygame.K_RIGHT and player.change_x > 0:
         player.stop()
+		
 
 def check_events():
     for event in pygame.event.get():
