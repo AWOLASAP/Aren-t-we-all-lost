@@ -1,7 +1,7 @@
 import pygame 
 from pygame.sprite import Sprite
 
-from MainSettings import Settings 
+from MainSettings import Settings
 from level import Level
 from walls_and_floors import *
 
@@ -14,10 +14,9 @@ class Level1(Level):
 		super().__init__()
 
 		#List of the different walls in the form [x, y, width, height, color]
-		walls = [[0, 0, main_settings.screen_width, 50, (255, 255, 0)],
-		 [0, 650, main_settings.screen_width, 50, (0, 255, 255)],
-		 [0, 0, 50, main_settings.screen_height, (255, 0, 255)],
-		 [main_settings.screen_width - 50, 0, 50, main_settings.screen_height, (255, 0, 255)]]
+		walls = [[0, 200, 900, 30, self.color.GRAY],
+		[100, 400, 900, 30, self.color.GRAY],
+		]
 
 		for item in walls:
 			wall = Wall(item[0], item[1], item[2], item[3], item[4])

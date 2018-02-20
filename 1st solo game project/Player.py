@@ -30,13 +30,15 @@ class Player(Sprite):
 
 	def go_right(self):
 		#User hits right arrow
-		self.change_x = 3
-		self.image = pygame.image.load('Images/Player_Right.bmp')
+		if self.rect.right < main_settings.screen_width:
+			self.change_x = 3
+			self.image = pygame.image.load('Images/Player_Right.bmp')
 
 	def go_left(self):
 		#User hits left arrow
-		self.change_x = -3
-		self.image = pygame.image.load('Images/Player_Left.bmp')
+		if self.rect.left > 0:
+			self.change_x = -3
+			self.image = pygame.image.load('Images/Player_Left.bmp')
 
 	def stop(self):
 		#User isn't pressing left or right arrow
@@ -72,7 +74,6 @@ class Player(Sprite):
 		"""Find a new position for the player. """
 		
 		self.calc_grav()
-	
 		
 		#Move left/right
 		self.rect.x += self.change_x
@@ -88,6 +89,9 @@ class Player(Sprite):
 				self.rect.left = block.rect.right
 
 		#Move up and down
+		if (self.change_y + self.rect.top) < 0:
+			self.change_y = -1 * self.rect.top 
+
 		self.rect.y += self.change_y
 		
 		#Did this |^| cause the player to hit a wall?
@@ -101,9 +105,10 @@ class Player(Sprite):
 
 			#Stop our vetical movement
 			self.change_y = 0
+
 			if self.change_x == 0:
 				self.image = pygame.image.load('Images/Player.bmp')
-			
+
 		if self.change_y > 1 and self.change_x == 0:
 			self.image = pygame.image.load('Images/Player_Down.bmp')
 		elif self.change_y < 0 and self.change_x == 0:
