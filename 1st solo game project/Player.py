@@ -5,12 +5,12 @@ from MainSettings import Settings
 
 main_settings = Settings()
 
+
 class Player(Sprite):
 
 	def __init__(self, x, y):
 		"""Initialize the player"""
 
-		#Call the parents constuctor
 		super().__init__()
 
 		self.main_settings = Settings()
@@ -70,12 +70,26 @@ class Player(Sprite):
 			self.change_y = 0
 			self.rect.y = main_settings.screen_height - self.rect.height
 
-	def move(self):
+	def spawn(self, level):
+		#Moves the player to a level spawnpoint
+		if level == 1:
+			self.rect.center = (100, 100)
+		elif level == 2:
+			self.rect.center = (100, 100)
+		elif level == 3:
+			self.rect.center = (100, 100)
+
+	def update(self):
 		"""Find a new position for the player. """
 		
 		self.calc_grav()
 		
 		#Move left/right
+		if (self.change_x + self.rect.right) >= self.main_settings.screen_width:
+			self.change_x = self.main_settings.screen_width - self.rect.right
+		elif (self.change_x + self.rect.left) <= 0:
+			self.change_x = 0 - self.rect.left
+
 		self.rect.x += self.change_x
 
 		#Did this |^| cause the player to hit a wall?

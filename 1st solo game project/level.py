@@ -10,6 +10,7 @@ class Level(object):
 	floor_list = None
 	color = Colors()
 	
+	
 	def __init__(self):
 		"""Constructor, create our lists"""
 		self.wall_list = pygame.sprite.Group()

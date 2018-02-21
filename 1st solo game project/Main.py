@@ -10,7 +10,6 @@ def run_game():
 	pygame.display.set_caption("Aren't We All Lost?")
 
 	while True:
-		gf.check_events()
 		gf.update_game()
 
 run_game()

@@ -8,7 +8,6 @@ class Wall(Sprite):
     """ Wall the player can run into. """
     def __init__(self, x, y, width, height, color):
 
-        # Call the parent's constructor
         super().__init__()
 
         # Make a 'color' wall, of the size specified in the parameters

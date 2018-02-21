@@ -1,11 +1,24 @@
 import pygame
 from pygame.sprite import Sprite 
 
-class Level_Goal(Sprite):
+from MainSettings import Settings 
 
-	def __init__(self):
+
+class LevelGoal(Sprite):
+
+	def __init__(self, x, y):
+
+		super().__init__()
 
 		self.image = pygame.image.load('Images/Level_Goal.bmp')
+		
 		self.rect = self.image.get_rect()
+		self.rect.center = (x, y)
 
-		self.level1_location = (100, 830)
+	def spawn(self, level):
+		if level == 1:
+			self.rect.center = (900, 615)
+		elif level == 2:
+			self.rect.center = (900, 355)
+		elif level == 3:
+			self.rect.center = (100, 100)

@@ -16,6 +16,8 @@ from Credits import Credits
 from Player import Player
 from walls_and_floors import *
 from Lvl_1 import Level1
+from level_goal import LevelGoal
+
 
 main_settings = Settings()
 GameStats = GameStats(main_settings)
@@ -26,22 +28,27 @@ PlayButton = PlayButton()
 Credits = Credits()
 player = Player(100, 100)
 clock = pygame.time.Clock()
+levelgoal = LevelGoal(900, 615)
 
 norm_font = pygame.font.SysFont(None, 64)
 large_font = pygame.font.SysFont(None, 128)
 
 sprite_list = pygame.sprite.Group()
+sprite_list.add(levelgoal)
 sprite_list.add(player)
 
 levels = []
 level = Level1()
 levels.append(level)
-current_level = levels[GameStats.game_level] 
-player.level = current_level
+
+current_level = levels[GameStats.game_level]
+player.level = current_level 
 
 
 def update_game():
     main_settings.screen.fill(main_settings.bg_color)
+
+    check_events()
 
     if GameStats.game_level == 0:
         show_start_menu()
@@ -58,8 +65,10 @@ def check_KEYDOWN_events(event):
         sys.exit()
     elif event.key == pygame.K_s:
         GameStats.game_level += 1
+        spawn_sprites()
     elif event.key == pygame.K_b:
         GameStats.game_level -= 1
+        spawn_sprites()
     elif event.key == pygame.K_RIGHT:
         player.go_right()
     elif event.key == pygame.K_LEFT:
@@ -71,10 +80,10 @@ def check_KEYUP_events(event):
     if event.key == pygame.K_LEFT and player.change_x < 0:
         player.stop()
     elif event.key == pygame.K_RIGHT and player.change_x > 0:
-        player.stop()
-		
+        player.stop()	
 
 def check_events():
+    check_goal()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -210,9 +219,16 @@ def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_im
         pygame.display.update()
         pygame.time.wait(50)
 
-def spawn_player(x, y):
-    Player.rect.x = x
-    Player.rect.y = y
+def check_goal():
+    hit_goal = pygame.sprite.collide_rect(player, levelgoal)
+    if hit_goal:
+        GameStats.game_level += 1
+        player.spawn(GameStats.game_level)
+        levelgoal.spawn(GameStats.game_level)
+
+def spawn_sprites():
+    player.spawn(GameStats.game_level)
+    levelgoal.spawn(GameStats.game_level)
 
 def show_start_menu():
     if main_settings.first_start_menu:
@@ -228,6 +244,7 @@ def show_start_menu():
 
 def play_intro_to_char():
     GameStats.game_level = 1
+    spawn_sprites()
 
     print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
     sleep(1.5)
@@ -240,7 +257,6 @@ def play_intro_to_char():
 
 def play_level_one():
     check_events()
-    player.move()
+    player.update()
     current_level.wall_list.draw(main_settings.screen)
     sprite_list.draw(main_settings.screen)
-    
