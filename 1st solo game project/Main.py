@@ -11,5 +11,6 @@ def run_game():
 
 	while True:
 		gf.update_game()
+		gf.check_events()
 
 run_game()

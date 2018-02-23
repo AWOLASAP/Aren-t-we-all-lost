@@ -72,11 +72,11 @@ class Player(Sprite):
 
 	def spawn(self, level):
 		#Moves the player to a level spawnpoint
-		if level == 1:
+		if level == 0:
 			self.rect.center = (100, 100)
+		elif level == 1:
+			self.rect.center = (100, 600)
 		elif level == 2:
-			self.rect.center = (100, 100)
-		elif level == 3:
 			self.rect.center = (100, 100)
 
 	def update(self):

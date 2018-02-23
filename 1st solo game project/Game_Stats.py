@@ -1,9 +1,31 @@
+import pygame
+
+from Lvl_1 import Level1
+from Lvl_2 import Level2
+
+
 class GameStats():
 	"""Tracks the statistics for Alien Invasion"""
 
-	def __init__(self, main_settings):
+	def __init__(self):
 		"""Initialize statistics."""
-		self.main_settings = main_settings
 
-		#Set game stat to intro
+		#Set game state to start
 		self.game_level = 0
+
+		self.first_start_menu = True
+		self.first_level1 = True
+		self.first_level2 = True
+		self.first_level3 = True
+
+		self.levels = []
+
+		self.level = Level1()
+		self.levels.append(self.level)
+
+		self.level = Level2()
+		self.levels.append(self.level)
+
+		self.current_level = self.levels[self.game_level]
+
+

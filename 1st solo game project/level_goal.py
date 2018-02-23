@@ -16,9 +16,9 @@ class LevelGoal(Sprite):
 		self.rect.center = (x, y)
 
 	def spawn(self, level):
-		if level == 1:
+		if level == 0:
 			self.rect.center = (900, 615)
+		elif level == 1:
+			self.rect.center = (900, 465)
 		elif level == 2:
-			self.rect.center = (900, 355)
-		elif level == 3:
 			self.rect.center = (100, 100)

@@ -16,19 +16,21 @@ from Credits import Credits
 from Player import Player
 from walls_and_floors import *
 from Lvl_1 import Level1
+from Lvl_2 import Level2
 from level_goal import LevelGoal
 
 
 main_settings = Settings()
-GameStats = GameStats(main_settings)
+GameStats = GameStats()
 StoryLine = StoryLine()
 StoryDisplay = StoryDisplay(main_settings)
 GameLogo = GameLogo()
 PlayButton = PlayButton()
 Credits = Credits()
 player = Player(100, 100)
-clock = pygame.time.Clock()
 levelgoal = LevelGoal(900, 615)
+
+clock = pygame.time.Clock()
 
 norm_font = pygame.font.SysFont(None, 64)
 large_font = pygame.font.SysFont(None, 128)
@@ -37,26 +39,28 @@ sprite_list = pygame.sprite.Group()
 sprite_list.add(levelgoal)
 sprite_list.add(player)
 
-levels = []
-level = Level1()
-levels.append(level)
 
-current_level = levels[GameStats.game_level]
-player.level = current_level 
 
 
 def update_game():
+    GameStats.current_level = GameStats.levels[GameStats.game_level]
+    player.level = GameStats.current_level
+
     main_settings.screen.fill(main_settings.bg_color)
 
     check_events()
 
-    if GameStats.game_level == 0:
+    if GameStats.first_start_menu:
         show_start_menu()
-    elif GameStats.game_level == 1:
+
+    elif GameStats.game_level == 0:
         play_level_one()
 
+    elif GameStats.game_level == 1:
+        play_level_two()
+
+
     clock.tick(60)
-    print(clock)
 		
     pygame.display.flip()
 
@@ -64,11 +68,9 @@ def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
         sys.exit()
     elif event.key == pygame.K_s:
-        GameStats.game_level += 1
-        spawn_sprites()
+        advance_level()
     elif event.key == pygame.K_b:
-        GameStats.game_level -= 1
-        spawn_sprites()
+        degrade_level()
     elif event.key == pygame.K_RIGHT:
         player.go_right()
     elif event.key == pygame.K_LEFT:
@@ -83,7 +85,6 @@ def check_KEYUP_events(event):
         player.stop()	
 
 def check_events():
-    check_goal()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -98,8 +99,9 @@ def check_events():
 def check_play_button(mouse_x, mouse_y):
     play_button_clicked = PlayButton.rect.collidepoint(mouse_x, mouse_y)
 
-    if play_button_clicked and GameStats.game_level == 0:
+    if play_button_clicked and GameStats.first_start_menu:
         play_intro_to_char()
+        GameStats.first_start_menu = False
 
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
         '''Show a str fade in/out'''
@@ -144,14 +146,14 @@ def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_locatio
             surf2.blit(rt, (0, 0))
 
             if blurr:
-                main_settings.screen.blit(surf2, (text_location_x + uniform(-0.5, 0.5), text_location_y + uniform(-0.5, 0.5)))
+                main_settings.screen.blit(surf2, (text_location_x + uniform(-1, 1), text_location_y + uniform(-1, 1)))
             else:
                 main_settings.screen.blit(surf2, (text_location_x, text_location_y))
 
-
-
             pygame.display.flip()
             clock.tick(100)
+
+            check_events()
 
 def fade_image(image, fade_in_or_out, fade_time, x, y, blurr):
     '''Show an image fade in/out'''
@@ -203,6 +205,8 @@ def fade_image(image, fade_in_or_out, fade_time, x, y, blurr):
         pygame.display.flip()
         clock.tick(100)
 
+        check_events()
+
 def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_image):
     '''Print a str letter by letter on the screen'''
     text = ''
@@ -218,17 +222,38 @@ def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_im
         main_settings.screen.blit(new_surf, (0, 0))
         pygame.display.update()
         pygame.time.wait(50)
+        check_events()
 
 def check_goal():
     hit_goal = pygame.sprite.collide_rect(player, levelgoal)
     if hit_goal:
-        GameStats.game_level += 1
-        player.spawn(GameStats.game_level)
-        levelgoal.spawn(GameStats.game_level)
+        advance_level()
 
 def spawn_sprites():
     player.spawn(GameStats.game_level)
     levelgoal.spawn(GameStats.game_level)
+
+def advance_level():
+    if GameStats.game_level < (len(GameStats.levels) - 1):
+        GameStats.game_level += 1
+        GameStats.current_level = GameStats.levels[GameStats.game_level]
+        spawn_sprites()
+        if GameStats.first_start_menu:
+            GameStats.first_start_menu = False
+
+def degrade_level():
+    GameStats.game_level -= 1
+    GameStats.current_level = GameStats.levels[GameStats.game_level]
+    spawn_sprites()
+    if GameStats.first_start_menu and GameStats.game_level == 0:
+            GameStats.first_start_menu = True
+
+def update_level():
+    check_events()
+    check_goal()
+    player.update()
+    GameStats.current_level.wall_list.draw(main_settings.screen)
+    sprite_list.draw(main_settings.screen)
 
 def show_start_menu():
     if main_settings.first_start_menu:
@@ -239,11 +264,11 @@ def show_start_menu():
     Credits.blitme()
     GameLogo.blitme()
     PlayButton.blitme()
-    while GameStats.game_level == 0:
+    while GameStats.first_start_menu:
         check_events()
 
 def play_intro_to_char():
-    GameStats.game_level = 1
+    GameStats.game_level = 0
     spawn_sprites()
 
     print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
@@ -256,7 +281,9 @@ def play_intro_to_char():
     fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
 
 def play_level_one():
-    check_events()
-    player.update()
-    current_level.wall_list.draw(main_settings.screen)
-    sprite_list.draw(main_settings.screen)
+    update_level()
+
+def play_level_two():
+    update_level()
+
+

@@ -5,7 +5,8 @@ from MainSettings import Settings
 
 
 class Wall(Sprite):
-    """ Wall the player can run into. """
+    """ Wall the player can run into and jump off of."""
+
     def __init__(self, x, y, width, height, color):
 
         super().__init__()
