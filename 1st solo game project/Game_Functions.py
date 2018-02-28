@@ -18,6 +18,7 @@ from walls_and_floors import *
 from Lvl_1 import Level1
 from Lvl_2 import Level2
 from level_goal import LevelGoal
+from colors import Colors
 
 
 main_settings = Settings()
@@ -29,6 +30,7 @@ PlayButton = PlayButton()
 Credits = Credits()
 player = Player(100, 100)
 levelgoal = LevelGoal(900, 615)
+color = Colors()
 
 clock = pygame.time.Clock()
 
@@ -51,9 +53,11 @@ def update_game():
     check_events()
 
     if GameStats.first_start_menu:
+        main_settings.bg_color = color.DARKGRAY
         show_start_menu()
 
     elif GameStats.game_level == 0:
+        main_settings.bg_color = color.LIGHTGRAY
         play_level_one()
 
     elif GameStats.game_level == 1:
@@ -242,11 +246,12 @@ def advance_level():
             GameStats.first_start_menu = False
 
 def degrade_level():
-    GameStats.game_level -= 1
-    GameStats.current_level = GameStats.levels[GameStats.game_level]
-    spawn_sprites()
-    if GameStats.first_start_menu and GameStats.game_level == 0:
-            GameStats.first_start_menu = True
+    if GameStats.game_level > 0:
+        GameStats.game_level -= 1
+        GameStats.current_level = GameStats.levels[GameStats.game_level]
+        spawn_sprites()
+        if GameStats.first_start_menu and GameStats.game_level == 0:
+                GameStats.first_start_menu = True
 
 def update_level():
     check_events()
@@ -269,8 +274,8 @@ def show_start_menu():
 
 def play_intro_to_char():
     GameStats.game_level = 0
+    main_settings.bg_color = color.BLACK
     spawn_sprites()
-
     print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
     sleep(1.5)
     print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font, False, False)

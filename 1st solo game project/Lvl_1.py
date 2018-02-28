@@ -16,8 +16,6 @@ class Level1(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 200, 900, 30, self.color.GRAY],
-			[100, 400, 900, 30, self.color.GRAY],
 			[0, 675, 1000, 25, self.color.GRAY]
 		]
 
