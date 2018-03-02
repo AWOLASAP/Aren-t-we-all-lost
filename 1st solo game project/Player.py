@@ -77,7 +77,7 @@ class Player(Sprite):
 		elif level == 1:
 			self.rect.center = (100, 600)
 		elif level == 2:
-			self.rect.center = (100, 100)
+			self.rect.center = (900, 600)
 
 	def update(self):
 		"""Find a new position for the player. """

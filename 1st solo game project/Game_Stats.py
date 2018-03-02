@@ -2,6 +2,7 @@ import pygame
 
 from Lvl_1 import Level1
 from Lvl_2 import Level2
+from lvl_3 import Level3
 
 
 class GameStats():
@@ -20,13 +21,16 @@ class GameStats():
 		self.first_level3 = True
 
 		self.levels = []
-
+		
 		self.level = Level1()
 		self.levels.append(self.level)
 
 		self.level = Level2()
 		self.levels.append(self.level)
-
+			
+		self.level = Level3()
+		self.levels.append(self.level)
+		
 		self.current_level = self.levels[self.game_level]
 
 

@@ -17,6 +17,7 @@ from Player import Player
 from walls_and_floors import *
 from Lvl_1 import Level1
 from Lvl_2 import Level2
+from lvl_3 import Level3
 from level_goal import LevelGoal
 from colors import Colors
 
@@ -245,11 +246,11 @@ def spawn_sprites():
 def advance_level():
     if GameStats.game_level < (len(GameStats.levels) - 1):
         GameStats.game_level += 1
-        GameStats.current_level = GameStats.levels[GameStats.game_level]
-        spawn_sprites()
         if GameStats.start_menu:
             GameStats.start_menu = False
             GameStats.game_level = 0
+        GameStats.current_level = GameStats.levels[GameStats.game_level]
+        spawn_sprites()
 
 def degrade_level():
     GameStats.game_level -= 1
@@ -305,7 +306,5 @@ def play_level_two():
     update_level()
 
 def play_level_three():
-    set_bg_color(color.GRAY)
+    set_bg_color(color.GLOOMYGRAY)
     update_level()
-
-
