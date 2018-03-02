@@ -11,6 +11,3 @@ class Settings():
 		self.bg_color = (0, 0, 0)
 		self.screen = pygame.display.set_mode(
 			(self.screen_width, self.screen_height))
-
-		self.first_start_menu = True
-		self.init_lvl1 = True

@@ -13,6 +13,7 @@ class GameStats():
 		#Set game state to start
 		self.game_level = 0
 
+		self.start_menu = True
 		self.first_start_menu = True
 		self.first_level1 = True
 		self.first_level2 = True

@@ -52,16 +52,17 @@ def update_game():
 
     check_events()
 
-    if GameStats.first_start_menu:
-        main_settings.bg_color = color.DARKGRAY
+    if GameStats.start_menu:
         show_start_menu()
 
     elif GameStats.game_level == 0:
-        main_settings.bg_color = color.LIGHTGRAY
         play_level_one()
 
     elif GameStats.game_level == 1:
         play_level_two()
+
+    elif GameStats.game_level == 2:
+        play_level_three()
 
 
     clock.tick(60)
@@ -103,9 +104,9 @@ def check_events():
 def check_play_button(mouse_x, mouse_y):
     play_button_clicked = PlayButton.rect.collidepoint(mouse_x, mouse_y)
 
-    if play_button_clicked and GameStats.first_start_menu:
+    if play_button_clicked and GameStats.start_menu:
         play_intro_to_char()
-        GameStats.first_start_menu = False
+        GameStats.start_menu = False
 
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
         '''Show a str fade in/out'''
@@ -228,6 +229,10 @@ def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_im
         pygame.time.wait(50)
         check_events()
 
+def set_bg_color(color):
+
+    main_settings.bg_color = color
+
 def check_goal():
     hit_goal = pygame.sprite.collide_rect(player, levelgoal)
     if hit_goal:
@@ -242,16 +247,22 @@ def advance_level():
         GameStats.game_level += 1
         GameStats.current_level = GameStats.levels[GameStats.game_level]
         spawn_sprites()
-        if GameStats.first_start_menu:
-            GameStats.first_start_menu = False
+        if GameStats.start_menu:
+            GameStats.start_menu = False
+            GameStats.game_level = 0
 
 def degrade_level():
-    if GameStats.game_level > 0:
-        GameStats.game_level -= 1
-        GameStats.current_level = GameStats.levels[GameStats.game_level]
-        spawn_sprites()
-        if GameStats.first_start_menu and GameStats.game_level == 0:
-                GameStats.first_start_menu = True
+    GameStats.game_level -= 1
+    if GameStats.game_level == -1:
+        set_bg_color(color.BLACK)
+        GameStats.first_start_menu = True
+        GameStats.start_menu = True
+
+    if GameStats.game_level < 0:
+        GameStats.game_level = 0
+    
+    GameStats.current_level = GameStats.levels[GameStats.game_level]
+    spawn_sprites()
 
 def update_level():
     check_events()
@@ -261,15 +272,16 @@ def update_level():
     sprite_list.draw(main_settings.screen)
 
 def show_start_menu():
-    if main_settings.first_start_menu:
+    set_bg_color(color.BLACK)
+    if GameStats.first_start_menu:
         fade_image(GameLogo.image, 0, 3, -33, 90, False)
         fade_image(PlayButton.image, 0, 3, 387, 317, False,)
-        main_settings.first_start_menu = False
+        GameStats.first_start_menu = False
 
     Credits.blitme()
     GameLogo.blitme()
     PlayButton.blitme()
-    while GameStats.first_start_menu:
+    while GameStats.start_menu:
         check_events()
 
 def play_intro_to_char():
@@ -286,9 +298,14 @@ def play_intro_to_char():
     fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
 
 def play_level_one():
+    set_bg_color(color.FADEDGRAY)
     update_level()
 
 def play_level_two():
+    update_level()
+
+def play_level_three():
+    set_bg_color(color.GRAY)
     update_level()
 
 
