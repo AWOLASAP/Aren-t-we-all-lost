@@ -8,6 +8,12 @@ class Level(object):
 	#Each room has a list of walls and floors
 	wall_list = None
 	floor_list = None
+
+	lvl_text = ''
+	lvl_text_image = None
+	text_location = (0, 0)
+	font = pygame.font.SysFont(None, 64)
+
 	color = Colors()
 	
 	

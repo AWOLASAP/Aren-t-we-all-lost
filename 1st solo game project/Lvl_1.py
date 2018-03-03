@@ -19,6 +19,11 @@ class Level1(Level):
 			[0, 675, 1000, 25, self.color.GRAY]
 		]
 
+		self.lvl_text = "I think I can move some..."
+		self.lvl_text_image = self.font.render(self.lvl_text, True, (200, 200, 200))
+		self.text_location = (100, 100)
+
+
 		for item in walls:
 			wall = Wall(item[0], item[1], item[2], item[3], item[4])
 			self.wall_list.add(wall)

@@ -22,3 +22,5 @@ class LevelGoal(Sprite):
 			self.rect.center = (900, 465)
 		elif level == 2:
 			self.rect.center = (100, 165)
+		elif level == 3:
+			self.rect.center = (900, 615)

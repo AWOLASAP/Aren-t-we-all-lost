@@ -22,6 +22,10 @@ class Level3(Level):
 			[0, 225, 800, 25, self.color.GRAY]
 		]
 
+		self.lvl_text = "It's getting darker"
+		self.lvl_text_image = self.font.render(self.lvl_text, True, (200, 200, 200))
+		self.text_location = (600, 50)
+
 		for item in walls:
 			wall = Wall(item[0], item[1], item[2], item[3], item[4])
 			self.wall_list.add(wall)

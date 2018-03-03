@@ -44,8 +44,8 @@ sprite_list.add(player)
 
 
 
-
 def update_game():
+
     GameStats.current_level = GameStats.levels[GameStats.game_level]
     player.level = GameStats.current_level
 
@@ -64,6 +64,9 @@ def update_game():
 
     elif GameStats.game_level == 2:
         play_level_three()
+
+    elif GameStats.game_level == 3:
+        play_level_four()
 
 
     clock.tick(60)
@@ -213,15 +216,15 @@ def fade_image(image, fade_in_or_out, fade_time, x, y, blurr):
 
         check_events()
 
-def print_by_letter(text_str, text_location, font_type, extra_image_yn, extra_image):
+def print_by_letter(text_str, text_location, font_type):
     '''Print a str letter by letter on the screen'''
     text = ''
-    new_surf = pygame.surface.Surface((main_settings.screen_width, main_settings.screen_height))
     font = font_type
+    new_surf = pygame.surface.Surface((main_settings.screen_width, main_settings.screen_height))
     for i in range(len(text_str)):
         new_surf.fill(main_settings.bg_color)
         text += text_str[i]
-        text_surface = font.render(text, True, (200, 200, 200))
+        text_surface = font.render(text, True, color.WHITE)
         text_rect = text_surface.get_rect()
         text_rect.center = text_location
         new_surf.blit(text_surface, text_location)
@@ -251,6 +254,12 @@ def advance_level():
             GameStats.game_level = 0
         GameStats.current_level = GameStats.levels[GameStats.game_level]
         spawn_sprites()
+        if GameStats.game_level == 0:
+            GameStats.first_level1 = True
+        elif GameStats.game_level == 1:
+            GameStats.first_level2 = True
+        elif GameStats.game_level == 2:
+            GameStats.first_level3 = True
 
 def degrade_level():
     GameStats.game_level -= 1
@@ -261,6 +270,13 @@ def degrade_level():
 
     if GameStats.game_level < 0:
         GameStats.game_level = 0
+
+    if GameStats.game_level == 0:
+        GameStats.first_level1 = True
+    elif GameStats.game_level == 1:
+        GameStats.first_level2 = True
+    elif GameStats.game_level == 2:
+        GameStats.first_level3 = True
     
     GameStats.current_level = GameStats.levels[GameStats.game_level]
     spawn_sprites()
@@ -270,6 +286,12 @@ def update_level():
     check_goal()
     player.update()
     GameStats.current_level.wall_list.draw(main_settings.screen)
+    
+    try:
+        main_settings.screen.blit(GameStats.current_level.lvl_text_image, GameStats.current_level.text_location)
+    except TypeError:
+        pass
+
     sprite_list.draw(main_settings.screen)
 
 def show_start_menu():
@@ -278,7 +300,6 @@ def show_start_menu():
         fade_image(GameLogo.image, 0, 3, -33, 90, False)
         fade_image(PlayButton.image, 0, 3, 387, 317, False,)
         GameStats.first_start_menu = False
-
     Credits.blitme()
     GameLogo.blitme()
     PlayButton.blitme()
@@ -286,25 +307,33 @@ def show_start_menu():
         check_events()
 
 def play_intro_to_char():
-    GameStats.game_level = 0
     main_settings.bg_color = color.BLACK
+    main_settings.screen.fill(main_settings.bg_color)
+    GameStats.game_level = 0
     spawn_sprites()
-    print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font, False, False)
+    print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font)
     sleep(1.5)
-    print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font, False, False)
+    print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font)
     sleep(1.5)
     main_settings.screen.fill(main_settings.bg_color)
     fade_text(StoryLine.intro_to_charTEXT3, 0, 3, 325, 300, large_font, False)
     sleep(0.5)
     fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
+    GameStats.first_level1 = True
 
 def play_level_one():
     set_bg_color(color.FADEDGRAY)
+    main_settings.screen.fill(main_settings.bg_color)
     update_level()
 
 def play_level_two():
+    set_bg_color(color.FADEDGRAY)
     update_level()
 
 def play_level_three():
     set_bg_color(color.GLOOMYGRAY)
+    update_level()
+
+def play_level_four():
+    set_bg_color(color.DARKGRAY)
     update_level()
