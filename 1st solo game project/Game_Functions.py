@@ -86,12 +86,16 @@ def check_KEYDOWN_events(event):
         player.go_left() 
     elif event.key == pygame.K_UP:
         player.jump()
+    elif event.key == pygame.K_DOWN:
+        player.crouch()
 
 def check_KEYUP_events(event):
     if event.key == pygame.K_LEFT and player.change_x < 0:
         player.stop()
     elif event.key == pygame.K_RIGHT and player.change_x > 0:
-        player.stop()	
+        player.stop()
+    elif event.key == pygame.K_DOWN:
+        player.stand()
 
 def check_events():
     for event in pygame.event.get():
@@ -287,8 +291,10 @@ def update_level():
     player.update()
     GameStats.current_level.wall_list.draw(main_settings.screen)
     
+    #Try to blit the levels text to the screen
     try:
         main_settings.screen.blit(GameStats.current_level.lvl_text_image, GameStats.current_level.text_location)
+    #Allow if there is no text
     except TypeError:
         pass
 
