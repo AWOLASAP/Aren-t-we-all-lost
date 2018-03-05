@@ -8,7 +8,7 @@ from walls_and_floors import *
 main_settings = Settings()
 
 class Level4(Level):
-	"""Creates all the walls and floors for level1"""
+	"""Creates all the walls and floors for the level"""
 
 	def __init__(self):
 		
@@ -17,7 +17,7 @@ class Level4(Level):
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
 			[0, 675, 1000, 25, self.color.GRAY],
-			[0, 150, 200, 25, self.color.GRAY],
+			[0, 160, 200, 25, self.color.GRAY],
 			[150, 275, 200, 25, self.color.GRAY],
 			[300, 400, 200, 25, self.color.GRAY],
 			[450, 525, 200, 25, self.color.GRAY]

@@ -8,7 +8,7 @@ from walls_and_floors import *
 main_settings = Settings()
 
 class Level2(Level):
-	"""Creates all the walls and floors for level1"""
+	"""Creates all the walls and floors for the level"""
 
 	def __init__(self):
 		

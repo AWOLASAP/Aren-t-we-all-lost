@@ -88,7 +88,10 @@ def check_KEYDOWN_events(event):
     elif event.key == pygame.K_LEFT:
         player.go_left() 
     elif event.key == pygame.K_UP:
-        player.jump()
+        if player.crouching:
+            player.stand()
+        else:
+            player.jump()
     elif event.key == pygame.K_DOWN:
         player.crouch()
 
@@ -97,8 +100,6 @@ def check_KEYUP_events(event):
         player.stop()
     elif event.key == pygame.K_RIGHT and player.change_x > 0:
         player.stop()
-    elif event.key == pygame.K_DOWN:
-        player.stand()
 
 def check_events():
     for event in pygame.event.get():
@@ -357,4 +358,3 @@ def play_level_four():
 def play_level_five():
 
     update_level()
-

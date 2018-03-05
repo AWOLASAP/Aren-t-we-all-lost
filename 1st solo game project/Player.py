@@ -44,19 +44,32 @@ class Player(Sprite):
 	def go_right(self):
 		#User hits right arrow
 		if self.rect.right < main_settings.screen_width:
-			self.change_x = 3
-			self.image = self.player_right
+			if self.crouching:
+				self.change_x = 2
+			else:
+				self.change_x = 3
+			if not self.crouching:
+				self.image = self.player_right
+			else:
+				self.image = self.player_crouch_right
 
 	def go_left(self):
 		#User hits left arrow
 		if self.rect.left > 0:
-			self.change_x = -3
-			self.image = self.player_left
+			if self.crouching:
+				self.change_x = -2
+			else:
+				self.change_x = -3
+			if not self.crouching:
+				self.image = self.player_left
+			else:
+				self.image = self.player_crouch_left
 
 	def stop(self):
 		#User isn't pressing left or right arrow
 		self.change_x = 0
-		self.image = self.player
+		if not self.crouching:
+			self.image = self.player
 				
 	def jump(self):
 		"""When the user hits the 'jump' button 
@@ -70,7 +83,8 @@ class Player(Sprite):
 
 		#If the player was in a block then the player is on a platform;
 		#thus, move the player up
-		if (len(block_hit_list) > 0 and not self.crouching) or (self.rect.bottom >= main_settings.screen_height and self.crouching == False):
+		if ((len(block_hit_list) > 0 and not self.crouching) or 
+			(self.rect.bottom >= main_settings.screen_height and not self.crouching)):
 			self.change_y = -10
 
 	def crouch(self):
@@ -84,9 +98,18 @@ class Player(Sprite):
 		self.crouching = True
 
 	def stand(self):
-		self.image = self.player
+		if self.change_x > 0:
+			self.image = self.player_right
+		elif self.change_x < 0:
+			self.image = self.player_left
+		else:
+			self.image = self.player
+
 		self.rect = self.image.get_rect()
+		self.update_stand_location()
+		self.rect.y -= 5
 		player_bumped_head = pygame.sprite.spritecollide(self, self.level.wall_list, False)
+		self.rect.y += 5
 		if player_bumped_head:
 			print('bumped head')
 			if self.change_x < 0:
@@ -129,8 +152,12 @@ class Player(Sprite):
 		self.last_y = self.rect.y
 
 	def update_crouch_location(self):
-		self.rect.x = self.last_x - 25
-		self.rect.y = self.last_y + 50
+		if not self.crouching:
+			self.rect.x = self.last_x - 25
+			self.rect.y = self.last_y + 50
+		else:
+			self.rect.x = self.last_x
+			self.rect.y = self.last_y
 
 	def update_stand_location(self):
 		self.rect.x = self.last_x + 25
@@ -139,12 +166,13 @@ class Player(Sprite):
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """
-		
+		'''
 		if self.crouching:
 			if self.change_x < 0:
 				self.image = self.player_crouch_left		
 			else:
 				self.image = self.player_crouch_right
+		'''
 
 		self.calc_grav()
 		
@@ -157,7 +185,7 @@ class Player(Sprite):
 			#If going right, stop at the left side of the wall
 			if self.change_x > 0:
 				self.rect.right = block.rect.left
-			else:
+			elif self.change_x < 0:
 				#Otherwise, we are moving left so stop at the right side
 				self.rect.left = block.rect.right
 

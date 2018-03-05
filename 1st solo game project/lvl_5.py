@@ -8,7 +8,7 @@ from walls_and_floors import *
 main_settings = Settings()
 
 class Level5(Level):
-	"""Creates all the walls and floors for level1"""
+	"""Creates all the walls and floors for the level"""
 
 	def __init__(self):
 		
@@ -18,8 +18,8 @@ class Level5(Level):
 		walls = [
 			[0, 675, 1000, 25, self.color.GRAY],
 			[400, 0, 200, 625, self.color.GRAY],
-			[0, 0, 400, 475, self.color.GRAY], 
-			[600, 0, 400, 475, self.color.GRAY]
+			[0, 0, 400, 400, self.color.GRAY], 
+			[600, 0, 400, 400, self.color.GRAY]
 		]
 
 		self.lvl_text = "I'll fit under that"
