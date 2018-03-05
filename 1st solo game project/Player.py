@@ -86,8 +86,19 @@ class Player(Sprite):
 	def stand(self):
 		self.image = self.player
 		self.rect = self.image.get_rect()
-		self.update_stand_location()
-		self.crouching = False
+		player_bumped_head = pygame.sprite.spritecollide(self, self.level.wall_list, False)
+		if player_bumped_head:
+			print('bumped head')
+			if self.change_x < 0:
+				self.image = self.player_crouch_left
+			else:
+				self.image = self.player_crouch_right
+			self.rect = self.image.get_rect()
+			self.update_crouch_location()
+		else:
+			print("didn't bump head")
+			self.crouching = False
+			self.update_stand_location()
 
 	def calc_grav(self):
 		"""Calculate the effect of gravity"""
@@ -110,6 +121,8 @@ class Player(Sprite):
 			self.rect.center = (900, 600)
 		elif level == 3:
 			self.rect.center = (50, 100)
+		elif level == 4:
+			self.rect.center = (100, 625)
 
 	def update_last_location(self):
 		self.last_x = self.rect.x
@@ -138,7 +151,7 @@ class Player(Sprite):
 		#Move left/right
 		self.rect.x += self.change_x
 
-		#Did this /^\ cause the player to hit a wall?
+		#Did this moving cause the player to hit a wall?
 		block_hit_list = pygame.sprite.spritecollide(self, self.level.wall_list, False)
 		for block in block_hit_list:
 			#If going right, stop at the left side of the wall
@@ -160,7 +173,7 @@ class Player(Sprite):
 
 		self.rect.y += self.change_y
 		
-		#Did this /^\ cause the player to hit a wall?
+		#Did this moving cause the player to hit a wall?
 		block_hit_list = pygame.sprite.spritecollide(self, self.level.wall_list, False)
 		for block in block_hit_list:
 			#Reset position based on the top and bottom of hit object

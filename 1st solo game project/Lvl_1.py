@@ -20,8 +20,8 @@ class Level1(Level):
 		]
 
 		self.lvl_text = "I think I can move some..."
-		self.lvl_text_image = self.font.render(self.lvl_text, True, (200, 200, 200))
-		self.text_location = (100, 100)
+		self.lvl_text_image = self.font.render(self.lvl_text, True, self.color.LIGHTGRAY)
+		self.text_location = (100, 50)
 
 
 		for item in walls:

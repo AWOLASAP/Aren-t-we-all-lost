@@ -24,7 +24,7 @@ class Level4(Level):
 		]
 
 		self.lvl_text = "We need to hurry"
-		self.lvl_text_image = self.font.render(self.lvl_text, True, (200, 200, 200))
+		self.lvl_text_image = self.font.render(self.lvl_text, True, self.color.LIGHTGRAY)
 		self.text_location = (600, 50)
 
 		for item in walls:

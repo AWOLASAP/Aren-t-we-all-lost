@@ -4,6 +4,7 @@ from Lvl_1 import Level1
 from Lvl_2 import Level2
 from lvl_3 import Level3
 from lvl_4 import Level4
+from lvl_5 import Level5
 
 
 class GameStats():
@@ -34,6 +35,9 @@ class GameStats():
 		self.levels.append(self.level)
 		
 		self.level = Level4()
+		self.levels.append(self.level)
+
+		self.level = Level5()
 		self.levels.append(self.level)
 		
 		self.current_level = self.levels[self.game_level]

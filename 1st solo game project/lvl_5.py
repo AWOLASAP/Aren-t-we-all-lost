@@ -7,7 +7,7 @@ from walls_and_floors import *
 
 main_settings = Settings()
 
-class Level2(Level):
+class Level5(Level):
 	"""Creates all the walls and floors for level1"""
 
 	def __init__(self):
@@ -16,11 +16,13 @@ class Level2(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 675, 1000, 25, self.color.GRAY], 
-			[350, 525, 800, 25, self.color.GRAY]
+			[0, 675, 1000, 25, self.color.GRAY],
+			[400, 0, 200, 625, self.color.GRAY],
+			[0, 0, 400, 475, self.color.GRAY], 
+			[600, 0, 400, 475, self.color.GRAY]
 		]
 
-		self.lvl_text = "Hopefully I can jump"
+		self.lvl_text = "I'll fit under that"
 		self.lvl_text_image = self.font.render(self.lvl_text, True, self.color.LIGHTGRAY)
 		self.text_location = (100, 50)
 

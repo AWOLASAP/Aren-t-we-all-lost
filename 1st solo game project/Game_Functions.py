@@ -67,6 +67,9 @@ def update_game():
 
     elif GameStats.game_level == 3:
         play_level_four()
+    
+    elif GameStats.game_level == 4:
+        play_level_five()
 
 
     clock.tick(60)
@@ -234,12 +237,16 @@ def print_by_letter(text_str, text_location, font_type):
         new_surf.blit(text_surface, text_location)
         main_settings.screen.blit(new_surf, (0, 0))
         pygame.display.update()
-        pygame.time.wait(50)
+        pygame.time.wait(20)
         check_events()
 
 def set_bg_color(color):
 
     main_settings.bg_color = color
+
+def fill_main_screen():
+    
+    main_settings.screen.fill(main_settings.bg_color)
 
 def check_goal():
     hit_goal = pygame.sprite.collide_rect(player, levelgoal)
@@ -313,8 +320,8 @@ def show_start_menu():
         check_events()
 
 def play_intro_to_char():
-    main_settings.bg_color = color.BLACK
-    main_settings.screen.fill(main_settings.bg_color)
+    set_bg_color(color.BLACK)
+    fill_main_screen()
     GameStats.game_level = 0
     spawn_sprites()
     print_by_letter(StoryLine.intro_to_charTEXT1, StoryDisplay.intro_location1, norm_font)
@@ -322,24 +329,32 @@ def play_intro_to_char():
     print_by_letter(StoryLine.intro_to_charTEXT2, StoryDisplay.intro_location2, norm_font)
     sleep(1.5)
     main_settings.screen.fill(main_settings.bg_color)
-    fade_text(StoryLine.intro_to_charTEXT3, 0, 3, 325, 300, large_font, False)
+    fade_text(StoryLine.intro_to_charTEXT3, 0, 2, 325, 300, large_font, False)
     sleep(0.5)
-    fade_text(StoryLine.intro_to_charTEXT3, 1, 3, 325, 300, large_font, True)
+    fade_text(StoryLine.intro_to_charTEXT3, 1, 2, 325, 300, large_font, True)
     GameStats.first_level1 = True
 
 def play_level_one():
     set_bg_color(color.FADEDGRAY)
-    main_settings.screen.fill(main_settings.bg_color)
+    fill_main_screen()
     update_level()
 
 def play_level_two():
     set_bg_color(color.FADEDGRAY)
+    fill_main_screen()
     update_level()
 
 def play_level_three():
     set_bg_color(color.GLOOMYGRAY)
+    fill_main_screen()
     update_level()
 
 def play_level_four():
     set_bg_color(color.DARKGRAY)
+    fill_main_screen()
     update_level()
+
+def play_level_five():
+
+    update_level()
+
