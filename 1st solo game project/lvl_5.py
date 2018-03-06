@@ -16,10 +16,10 @@ class Level5(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 675, 1000, 25, self.color.GRAY],
-			[400, 0, 200, 625, self.color.GRAY],
-			[0, 0, 400, 400, self.color.GRAY], 
-			[600, 0, 400, 400, self.color.GRAY]
+			[0, 675, 1000, 25, self.color.GLOOMYGRAY],
+			[400, 0, 200, 625, self.color.GLOOMYGRAY],
+			[0, 0, 400, 400, self.color.GLOOMYGRAY], 
+			[600, 0, 400, 400, self.color.GLOOMYGRAY]
 		]
 
 		self.lvl_text = "I'll fit under that"

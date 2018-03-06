@@ -163,19 +163,28 @@ class Player(Sprite):
 		self.rect.x = self.last_x + 25
 		self.rect.y = self.last_y - 50
 
+	def check_crouch_speed(self):
+		if self.change_x == 3:
+			self.change_x = 2
+		elif self.change_x == -3:
+			self.change_x = -2
+	
+	def check_stand_speed(self):
+		if self.change_x == 2:
+			self.change_x = 3
+		elif self.change_x == -2:
+			self.change_x = -3
+						
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """
-		'''
-		if self.crouching:
-			if self.change_x < 0:
-				self.image = self.player_crouch_left		
-			else:
-				self.image = self.player_crouch_right
-		'''
-
 		self.calc_grav()
 		
+		if self.crouching:
+			self.check_crouch_speed()
+		elif not self.crouching:
+			self.check_stand_speed()
+			
 		#Move left/right
 		self.rect.x += self.change_x
 

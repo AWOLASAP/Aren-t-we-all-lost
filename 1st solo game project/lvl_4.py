@@ -16,11 +16,11 @@ class Level4(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 675, 1000, 25, self.color.GRAY],
-			[0, 160, 200, 25, self.color.GRAY],
-			[150, 275, 200, 25, self.color.GRAY],
-			[300, 400, 200, 25, self.color.GRAY],
-			[450, 525, 200, 25, self.color.GRAY]
+			[0, 675, 1000, 25, self.color.GLOOMYGRAY],
+			[0, 160, 200, 25, self.color.GLOOMYGRAY],
+			[150, 275, 200, 25, self.color.GLOOMYGRAY],
+			[300, 400, 200, 25, self.color.GLOOMYGRAY],
+			[450, 525, 200, 25, self.color.GLOOMYGRAY]
 		]
 
 		self.lvl_text = "We need to hurry"

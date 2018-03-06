@@ -20,6 +20,7 @@ from Lvl_2 import Level2
 from lvl_3 import Level3
 from level_goal import LevelGoal
 from colors import Colors
+from torch import Torch
 
 
 main_settings = Settings()
@@ -32,6 +33,7 @@ Credits = Credits()
 player = Player(100, 100)
 levelgoal = LevelGoal(900, 615)
 color = Colors()
+torch = Torch()
 
 clock = pygame.time.Clock()
 
@@ -356,5 +358,4 @@ def play_level_four():
     update_level()
 
 def play_level_five():
-
-    update_level()
+	update_level()
