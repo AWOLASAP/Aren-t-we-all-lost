@@ -146,6 +146,8 @@ class Player(Sprite):
 			self.rect.center = (50, 100)
 		elif level == 4:
 			self.rect.center = (100, 625)
+		elif level == 5:
+			self.rect.center = (100, 625)
 
 	def update_last_location(self):
 		self.last_x = self.rect.x

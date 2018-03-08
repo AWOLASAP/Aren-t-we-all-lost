@@ -15,9 +15,6 @@ from Play_Button import PlayButton
 from Credits import Credits
 from Player import Player
 from walls_and_floors import *
-from Lvl_1 import Level1
-from Lvl_2 import Level2
-from lvl_3 import Level3
 from level_goal import LevelGoal
 from colors import Colors
 from torch import Torch
@@ -72,8 +69,12 @@ def update_game():
     
     elif GameStats.game_level == 4:
         play_level_five()
+    
+    elif GameStats.game_level == 5:
+        play_level_six()
 
 
+	#Set the game to run at 60fps
     clock.tick(60)
 		
     pygame.display.flip()
@@ -358,4 +359,11 @@ def play_level_four():
     update_level()
 
 def play_level_five():
+	set_bg_color(color.DARKGRAY)
+    fill_main_screen()
+	update_level()
+
+def play_level_six():
+	set_bg_color(color.BLACK)
+	fill_main_screen()
 	update_level()
