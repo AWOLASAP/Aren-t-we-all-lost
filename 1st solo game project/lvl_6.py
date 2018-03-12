@@ -16,7 +16,7 @@ class Level6(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 675, 1000, 25, self.color.BLACK]
+			[0, 675, 1000, 25, self.color.NEARBLACK]
 		]
 
 		self.lvl_text = "I can't see"

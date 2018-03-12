@@ -20,10 +20,17 @@ class GameStats():
 
 		self.start_menu = True
 		self.first_start_menu = True
-		self.first_level1 = False
+		self.first_level1 = True
 		self.first_level2 = True
 		self.first_level3 = True
 		self.first_level4 = True
+		self.first_level5 = True
+		self.first_level6 = True
+		self.first_level7 = True
+		self.first_level8 = True
+		self.first_level9 = True
+		self.first_level0 = True
+		
 
 		self.levels = []
 		

@@ -16,6 +16,7 @@ class Colors():
 		self.HOTPINK = (255, 0, 128)
 		
 		self.BLACK = (0, 0, 0)
+		self.NEARBLACK = (30, 30, 30)
 		self.DARKGRAY = (64, 64, 64)
 		self.GLOOMYGRAY = (96, 96, 96)
 		self.GRAY = (128, 128, 128)

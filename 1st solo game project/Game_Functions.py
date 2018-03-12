@@ -18,6 +18,7 @@ from walls_and_floors import *
 from level_goal import LevelGoal
 from colors import Colors
 from torch import Torch
+from blind_affect import Blind
 
 
 main_settings = Settings()
@@ -31,6 +32,8 @@ player = Player(100, 100)
 levelgoal = LevelGoal(900, 615)
 color = Colors()
 torch = Torch()
+blind_affect = Blind()
+torch_blind_affect = Blind()
 
 clock = pygame.time.Clock()
 
@@ -90,7 +93,7 @@ def check_KEYDOWN_events(event):
         player.go_right()
     elif event.key == pygame.K_LEFT:
         player.go_left() 
-    elif event.key == pygame.K_UP:
+    elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
         if player.crouching:
             player.stand()
         else:
@@ -301,15 +304,21 @@ def update_level():
     check_goal()
     player.update()
     GameStats.current_level.wall_list.draw(main_settings.screen)
-    
-    #Try to blit the levels text to the screen
+
+    sprite_list.draw(main_settings.screen)
+
+    if GameStats.game_level >= 5:
+        blind_affect.update(player)
+
+    if GameStats.game_level == 6:
+        main_settings.screen.blit(torch, torch.rect)
+
+    #Try to blit the level's text to the screen
     try:
         main_settings.screen.blit(GameStats.current_level.lvl_text_image, GameStats.current_level.text_location)
     #Allow if there is no text
     except TypeError:
         pass
-
-    sprite_list.draw(main_settings.screen)
 
 def show_start_menu():
     set_bg_color(color.BLACK)
@@ -359,11 +368,19 @@ def play_level_four():
     update_level()
 
 def play_level_five():
-	set_bg_color(color.DARKGRAY)
+    set_bg_color(color.DARKGRAY)
     fill_main_screen()
-	update_level()
+    update_level()
 
 def play_level_six():
 	set_bg_color(color.BLACK)
 	fill_main_screen()
 	update_level()
+
+def play_level_seven():
+    if GameStats.first_level7:
+        torch.spawn(Game_stats.game_level)
+        GameStats.first_level7 == False
+    set_bg_color(color.BLACK)
+    fill_main_screen()
+    update_level()

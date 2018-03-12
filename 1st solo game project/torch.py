@@ -15,6 +15,6 @@ class Torch(Sprite):
 		self.rect.x = -100
 		self.rect.y = -100
 		
-	def spawn(self, x, y):
-		self.rect.x = x
-		self.rect.y = y
+	def spawn(self, level):
+		if level = 6:
+			self.center = (900, 515)
