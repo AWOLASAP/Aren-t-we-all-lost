@@ -18,7 +18,7 @@ from walls_and_floors import *
 from level_goal import LevelGoal
 from colors import Colors
 from torch import Torch
-from blind_affect import Blind
+from blind_affect import blind_affect
 
 
 main_settings = Settings()
@@ -32,8 +32,7 @@ player = Player(100, 100)
 levelgoal = LevelGoal(900, 615)
 color = Colors()
 torch = Torch()
-blind_affect = Blind()
-torch_blind_affect = Blind()
+blind_affect = blind_affect()
 
 clock = pygame.time.Clock()
 
@@ -308,7 +307,7 @@ def update_level():
     sprite_list.draw(main_settings.screen)
 
     if GameStats.game_level >= 5:
-        blind_affect.update(player)
+        blind_affect.update([player.rect.center])
 
     if GameStats.game_level == 6:
         main_settings.screen.blit(torch, torch.rect)
