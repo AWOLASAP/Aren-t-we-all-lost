@@ -29,7 +29,7 @@ class GameStats():
 		self.first_level7 = True
 		self.first_level8 = True
 		self.first_level9 = True
-		self.first_level0 = True
+		self.first_level10 = True
 		
 
 		self.levels = []
@@ -53,5 +53,3 @@ class GameStats():
 		self.levels.append(self.level)
 		
 		self.current_level = self.levels[self.game_level]
-
-

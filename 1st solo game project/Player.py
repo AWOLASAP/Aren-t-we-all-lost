@@ -111,7 +111,6 @@ class Player(Sprite):
 		player_bumped_head = pygame.sprite.spritecollide(self, self.level.wall_list, False)
 		self.rect.y += 5
 		if player_bumped_head:
-			print('bumped head')
 			if self.change_x < 0:
 				self.image = self.player_crouch_left
 			else:
@@ -119,7 +118,6 @@ class Player(Sprite):
 			self.rect = self.image.get_rect()
 			self.update_crouch_location()
 		else:
-			print("didn't bump head")
 			self.crouching = False
 			self.update_stand_location()
 

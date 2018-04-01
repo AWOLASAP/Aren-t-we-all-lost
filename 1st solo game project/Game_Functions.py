@@ -99,6 +99,20 @@ def check_KEYDOWN_events(event):
             player.jump()
     elif event.key == pygame.K_DOWN:
         player.crouch()
+    elif event.key == pygame.K_f:
+        pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.NOFRAME | pygame.DOUBLEBUF | pygame.FULLSCREEN
+            )
+        pygame.display.update()
+    elif event.key == pygame.K_c:
+        pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.NOFRAME | pygame.DOUBLEBUF
+            )
+        pygame.display.update()
+    elif event.key == pygame.K_h:
+        pygame.display.iconify()
 
 def check_KEYUP_events(event):
     if event.key == pygame.K_LEFT and player.change_x < 0:
