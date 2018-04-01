@@ -18,16 +18,22 @@ class blind_affect(Sprite):
 		self.image.fill(color.BLACK)
 		
 		self.sight = pygame.image.load('Images/circle.png')
-		self.sight = pygame.transform.scale(self.sight, (250, 250))
-		self.sight_rect = self.sight.get_rect()
+		self.player_sight = pygame.transform.scale(self.sight, (300, 300))
+		self.player_sight_rect = self.player_sight.get_rect()
 
+		self.torch_sight = pygame.transform.scale(self.sight, (750, 750))
+		self.torch_sight_rect = self.torch_sight.get_rect()
 		
-	def update(self, locations=None):
+	def update(self, player_l, torch_l=None):
 		self.image.fill(color.BLACK)
-		if type(locations) != None:
-			for location in locations:
-				#pygame.draw.circle(self.image, (255, 255, 255, 0), location, 90)
-				self.sight_rect.center = location
-				self.image.blit(self.sight, self.sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
+		
+		self.player_sight_rect.center = player_l
+		self.image.blit(self.player_sight, self.player_sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
+		
+		try:
+			self.torch_sight_rect.center = torch_l
+			self.image.blit(self.torch_sight, self.torch_sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
+		except TypeError:
+			pass
 		main_settings.screen.blit(self.image, (0, 0))
 				

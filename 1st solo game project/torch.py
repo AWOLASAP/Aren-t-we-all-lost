@@ -10,11 +10,11 @@ class Torch(Sprite):
 		
 		super().__init__()
 		
-		self.image = pygame.image.load('Images/Torch.bmp')
+		self.image = pygame.image.load('Images/Torch.png')
 		self.rect = self.image.get_rect()
 		self.rect.x = -100
 		self.rect.y = -100
 		
 	def spawn(self, level):
-		if level == 5:
-			self.center = (900, 515)
+		if level == 6:
+			self.rect.center = (900, 505)

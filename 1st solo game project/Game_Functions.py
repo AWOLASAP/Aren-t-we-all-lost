@@ -75,6 +75,9 @@ def update_game():
     elif GameStats.game_level == 5:
         play_level_six()
 
+    elif GameStats.game_level == 6:
+        play_level_seven()
+
 
 	#Set the game to run at 60fps
     clock.tick(60)
@@ -320,11 +323,12 @@ def update_level():
 
     sprite_list.draw(main_settings.screen)
 
-    if GameStats.game_level >= 5:
-        blind_affect.update([player.rect.center])
+    if GameStats.game_level == 5:
+        blind_affect.update(player.rect.center)
 
     if GameStats.game_level == 6:
-        main_settings.screen.blit(torch, torch.rect)
+        main_settings.screen.blit(torch.image, torch.rect)
+        blind_affect.update(player.rect.center, torch.rect.center)
 
     #Try to blit the level's text to the screen
     try:
@@ -392,7 +396,7 @@ def play_level_six():
 
 def play_level_seven():
     if GameStats.first_level7:
-        torch.spawn(Game_stats.game_level)
+        torch.spawn(GameStats.game_level)
         GameStats.first_level7 == False
     set_bg_color(color.BLACK)
     fill_main_screen()
