@@ -1,12 +1,12 @@
 import pygame
-from pygame.sprite import Sprite
+from pygame.sprite import DirtySprite
 
 from MainSettings import Settings
 
 main_settings = Settings()
 
 
-class Player(Sprite):
+class Player(DirtySprite):
 
 	def __init__(self, x, y):
 		"""Initialize the player"""

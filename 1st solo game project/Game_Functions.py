@@ -81,8 +81,6 @@ def update_game():
 
 	#Set the game to run at 60fps
     clock.tick(60)
-		
-    pygame.display.flip()
 
 def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
@@ -103,17 +101,13 @@ def check_KEYDOWN_events(event):
     elif event.key == pygame.K_DOWN:
         player.crouch()
     elif event.key == pygame.K_f:
-        pygame.display.set_mode(
-            (main_settings.screen_width, main_settings.screen_height), 
-            pygame.NOFRAME | pygame.DOUBLEBUF | pygame.FULLSCREEN
-            )
-        pygame.display.update()
+        open_fullscreen()
     elif event.key == pygame.K_c:
-        pygame.display.set_mode(
-            (main_settings.screen_width, main_settings.screen_height), 
-            pygame.NOFRAME | pygame.DOUBLEBUF
-            )
-        pygame.display.update()
+        close_fullscreen()
+    elif event.key == pygame.K_m:
+        make_screen_movable()
+    elif event.key == pygame.K_n:
+        make_screen_not_movable()
     elif event.key == pygame.K_h:
         pygame.display.iconify()
 
@@ -141,6 +135,34 @@ def check_play_button(mouse_x, mouse_y):
     if play_button_clicked and GameStats.start_menu:
         play_intro_to_char()
         GameStats.start_menu = False
+
+def open_fullscreen():
+    pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.NOFRAME | pygame.DOUBLEBUF | pygame.FULLSCREEN
+            )
+    pygame.display.update()
+		
+def close_fullscreen():
+	pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.NOFRAME | pygame.DOUBLEBUF
+            )
+	pygame.display.update()
+
+def make_screen_movable():
+	pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.DOUBLEBUF
+            )
+	pygame.display.update()
+
+def make_screen_not_movable():
+	pygame.display.set_mode(
+            (main_settings.screen_width, main_settings.screen_height), 
+            pygame.NOFRAME | pygame.DOUBLEBUF
+            )
+	pygame.display.update()
 
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
         '''Show a str fade in/out'''
@@ -294,6 +316,7 @@ def advance_level():
             GameStats.first_level2 = True
         elif GameStats.game_level == 2:
             GameStats.first_level3 = True
+        pygame.display.flip()
 
 def degrade_level():
     GameStats.game_level -= 1
@@ -314,6 +337,7 @@ def degrade_level():
     
     GameStats.current_level = GameStats.levels[GameStats.game_level]
     spawn_sprites()
+	pygame.display.flip
 
 def update_level():
     check_events()
