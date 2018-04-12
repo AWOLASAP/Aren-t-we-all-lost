@@ -22,7 +22,9 @@ class Level6(Level):
 		self.lvl_text = "I can't see"
 		self.lvl_text_image = self.font.render(self.lvl_text, True, self.color.LIGHTGRAY)
 		self.text_location = (100, 50)
-
+		
+		self.has_blinding = True
+		
 		for item in walls:
 			wall = Wall(item[0], item[1], item[2], item[3], item[4])
 			self.wall_list.add(wall)
