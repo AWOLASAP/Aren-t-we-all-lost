@@ -361,11 +361,7 @@ def update_level():
     except TypeError:
         pass
         
-    if GameStats.current_level.has_blinding:
-        new_rect = pygame.draw.rect(main_settings.screen, color.BLACK, blind_affect.player_sight_rect)
-        pygame.display.update(blind_affect.player_sight_rect)
-    else:
-        pygame.display.flip()
+    pygame.display.flip()
 
 def show_start_menu():
     set_bg_color(color.BLACK)

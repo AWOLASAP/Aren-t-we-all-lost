@@ -11,5 +11,5 @@ class Settings():
 		self.bg_color = (0, 0, 0)
 		self.screen = pygame.display.set_mode(
 			(self.screen_width, self.screen_height), 
-			pygame.NOFRAME | pygame.DOUBLEBUF
+			pygame.NOFRAME | pygame.DOUBLEBUF | pygame.FULLSCREEN | pygame.HWSURFACE
 			)
