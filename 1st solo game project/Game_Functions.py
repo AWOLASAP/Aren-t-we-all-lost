@@ -98,6 +98,8 @@ def check_KEYDOWN_events(event):
             player.stand()
         else:
             player.jump()
+    elif event.key == pygame.K_z:
+        player.pick_up_item(torch)
     elif event.key == pygame.K_DOWN:
         player.crouch()
     elif event.key == pygame.K_f:
@@ -343,6 +345,7 @@ def update_level():
     check_events()
     check_goal()
     player.update()
+    torch.update(player)
     GameStats.current_level.wall_list.draw(main_settings.screen)
 
     sprite_list.draw(main_settings.screen)
@@ -352,7 +355,7 @@ def update_level():
 
     if GameStats.game_level == 6:
         main_settings.screen.blit(torch.image, torch.rect)
-        blind_affect.update(player.rect.center, torch.rect.center)
+        blind_affect.update(player.rect.center, torch)
 
     #Try to blit the level's text to the screen
     try:

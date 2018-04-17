@@ -176,7 +176,12 @@ class Player(DirtySprite):
 			self.change_x = 3
 		elif self.change_x == -2:
 			self.change_x = -3
-						
+			
+	def pick_up_item(self, torch):
+		touching_torch = pygame.sprite.collide_rect(self, torch)
+		if touching_torch:
+			torch.pick_up(self)
+							
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """

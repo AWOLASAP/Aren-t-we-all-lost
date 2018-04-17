@@ -24,16 +24,18 @@ class blind_affect(Sprite):
 		self.torch_sight = pygame.transform.scale(self.sight, (750, 750))
 		self.torch_sight_rect = self.torch_sight.get_rect()
 		
-	def update(self, player_l, torch_l=None):
+	def update(self, player_l, torch=None):
 		self.image.fill(color.BLACK)
 		
-		self.player_sight_rect.center = player_l
-		self.image.blit(self.player_sight, self.player_sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
+		if not torch == None and not torch.in_hand:
+			self.player_sight_rect.center = player_l
+			self.image.blit(self.player_sight, self.player_sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
 		
 		try:
-			self.torch_sight_rect.center = torch_l
+			self.torch_sight_rect.center = torch.rect.center
 			self.image.blit(self.torch_sight, self.torch_sight_rect, special_flags=pygame.BLEND_RGBA_SUB)
-		except TypeError:
+		except AttributeError:
 			pass
+			
 		main_settings.screen.blit(self.image, (0, 0))
 				
