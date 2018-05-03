@@ -31,6 +31,8 @@ class Player(DirtySprite):
 		self.rect.x = x
 		self.rect.y = y
 
+
+		self.move_speed = 3
 		self.change_x = 0
 		self.change_y = 0
 
@@ -167,15 +169,15 @@ class Player(DirtySprite):
 
 	def check_crouch_speed(self):
 		if self.change_x == 3:
-			self.change_x = 2
+			self.change_x = self.move_speed
 		elif self.change_x == -3:
-			self.change_x = -2
+			self.change_x = -self.move_speed
 	
 	def check_stand_speed(self):
 		if self.change_x == 2:
-			self.change_x = 3
+			self.change_x = self.move_spee/1.5
 		elif self.change_x == -2:
-			self.change_x = -3
+			self.change_x = -self.move_speed/1.5
 			
 	def pick_up_item(self, torch):
 		touching_torch = pygame.sprite.collide_rect(self, torch)
@@ -185,6 +187,9 @@ class Player(DirtySprite):
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """
+		
+		self.move_speed = 3
+		
 		self.calc_grav()
 		
 		if self.crouching:

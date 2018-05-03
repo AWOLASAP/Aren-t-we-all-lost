@@ -81,6 +81,8 @@ def update_game():
 
 	#Set the game to run at 60fps
     clock.tick(60)
+    fps = int(clock.get_fps)
+    print(fps)
 
 def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
@@ -351,11 +353,12 @@ def update_level():
     sprite_list.draw(main_settings.screen)
 
     if GameStats.game_level == 5:
-        blind_affect.update(player.rect.center)
+        blind_affect.update(player)
 
     if GameStats.game_level == 6:
         main_settings.screen.blit(torch.image, torch.rect)
-        blind_affect.update(player.rect.center, torch)
+        blind_affect.update(player, torch)
+        player.pick_up_item(torch)
 
     #Try to blit the level's text to the screen
     try:
