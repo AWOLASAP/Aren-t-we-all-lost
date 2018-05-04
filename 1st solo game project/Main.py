@@ -15,6 +15,3 @@ def run_game():
 		gf.check_events()
 
 run_game()
-
-#don't worry about this
-#https://superiorgamingtech.com/the-ultimate-gaming-pc-build-for-1800-dollars
