@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import DirtySprite
+from Game_Functions import clock
 
 from MainSettings import Settings
 
@@ -183,12 +184,15 @@ class Player(DirtySprite):
 		touching_torch = pygame.sprite.collide_rect(self, torch)
 		if touching_torch:
 			torch.pick_up(self)
-							
+	
+	def find_move_speed():
+		self.move_speed = 180/clock.get_fps()
+		
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """
 		
-		self.move_speed = 3
+		self.find_move_speed()
 		
 		self.calc_grav()
 		

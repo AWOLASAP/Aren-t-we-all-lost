@@ -45,8 +45,6 @@ sprite_list.add(levelgoal)
 sprite_list.add(player)
 
 
-
-
 def update_game():
 
     GameStats.current_level = GameStats.levels[GameStats.game_level]
@@ -88,7 +86,6 @@ def update_game():
 	#Set the game to run at 60fps
     clock.tick(60)
     fps = int(clock.get_fps())
-    print(fps)
 
 def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
