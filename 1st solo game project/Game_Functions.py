@@ -1,4 +1,5 @@
 import pygame
+pygame.init()
 import sys 
 import time
 from time import sleep
@@ -45,6 +46,7 @@ sprite_list.add(player)
 
 
 
+
 def update_game():
 
     GameStats.current_level = GameStats.levels[GameStats.game_level]
@@ -55,11 +57,15 @@ def update_game():
     check_events()
 
     if GameStats.start_menu:
+        if not pygame.mixer.Channel(1).get_busy():
+            pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Intro_Song.wav"))
         show_start_menu()
-
+        
+        
     elif GameStats.game_level == 0:
         play_level_one()
-
+        pygame.mixer.Channel(1).stop()
+        
     elif GameStats.game_level == 1:
         play_level_two()
 
@@ -81,7 +87,7 @@ def update_game():
 
 	#Set the game to run at 60fps
     clock.tick(60)
-    fps = int(clock.get_fps)
+    fps = int(clock.get_fps())
     print(fps)
 
 def check_KEYDOWN_events(event):
