@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import DirtySprite
-from Game_Functions import clock
+import Game_Functions as gf
 
 from MainSettings import Settings
 
@@ -34,6 +34,7 @@ class Player(DirtySprite):
 
 
 		self.move_speed = 3
+		self.crouch_speed = 2
 		self.change_x = 0
 		self.change_y = 0
 
@@ -48,9 +49,10 @@ class Player(DirtySprite):
 		#User hits right arrow
 		if self.rect.right < main_settings.screen_width:
 			if self.crouching:
-				self.change_x = 2
+				self.change_x = self.crouch_speed
 			else:
-				self.change_x = 3
+				self.change_x = self.move_speed
+				
 			if not self.crouching:
 				self.image = self.player_right
 			else:
@@ -60,9 +62,9 @@ class Player(DirtySprite):
 		#User hits left arrow
 		if self.rect.left > 0:
 			if self.crouching:
-				self.change_x = -2
+				self.change_x = -self.crouch_speed
 			else:
-				self.change_x = -3
+				self.change_x = -self.move_speed
 			if not self.crouching:
 				self.image = self.player_left
 			else:
@@ -169,25 +171,30 @@ class Player(DirtySprite):
 		self.rect.y = self.last_y - 50
 
 	def check_crouch_speed(self):
-		if self.change_x == 3:
-			self.change_x = self.move_speed
-		elif self.change_x == -3:
-			self.change_x = -self.move_speed
+		if self.change_x > 2:
+			self.change_x = self.crouch_speed
+		elif self.change_x < -2:
+			self.change_x = -self.crouch_speed
 	
 	def check_stand_speed(self):
-		if self.change_x == 2:
-			self.change_x = self.move_spee/1.5
-		elif self.change_x == -2:
-			self.change_x = -self.move_speed/1.5
+		if self.change_x < 3 and self.change_x > 0:
+			self.change_x = self.move_speed
+		elif self.change_x > -3 and self.change_x < 0:
+			self.change_x = -self.move_speed
 			
 	def pick_up_item(self, torch):
 		touching_torch = pygame.sprite.collide_rect(self, torch)
 		if touching_torch:
 			torch.pick_up(self)
 	
-	def find_move_speed():
-		self.move_speed = 180/clock.get_fps()
-		
+	def find_move_speed(self):
+		self.fps = gf.get_fps()
+		try:
+			self.move_speed = 180 / self.fps
+		except ZeroDivisionError:
+			self.move_speed = 3
+		self.crouch_speed = self.move_speed / 1.5
+			
 	def update(self):
 		"""Find a new position for the player 
 			and change the image of the player """
@@ -200,6 +207,7 @@ class Player(DirtySprite):
 			self.check_crouch_speed()
 		elif not self.crouching:
 			self.check_stand_speed()
+
 			
 		#Move left/right
 		self.rect.x += self.change_x

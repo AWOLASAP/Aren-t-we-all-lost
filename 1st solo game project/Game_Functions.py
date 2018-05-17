@@ -84,8 +84,12 @@ def update_game():
 
 
 	#Set the game to run at 60fps
-    clock.tick(60)
-    fps = int(clock.get_fps())
+    clock.tick(100)
+    
+    
+def get_fps():
+	fps = int(clock.get_fps())
+	return fps
 
 def check_KEYDOWN_events(event):
     if event.key == pygame.K_q:
