@@ -186,7 +186,7 @@ class Player(DirtySprite):
 		touching_torch = pygame.sprite.collide_rect(self, torch)
 		if touching_torch:
 			torch.pick_up(self)
-	
+
 	def find_move_speed(self):
 		self.fps = gf.get_fps()
 		try:
@@ -235,11 +235,12 @@ class Player(DirtySprite):
 		self.rect.y += self.change_y
 		
 		#Did this moving cause the player to hit a wall?
-		block_hit_list = pygame.sprite.spritecollide(self, self.level.wall_list, False)
+		block_hit_list = pygame.sprite.spritecollide(self, self.level.wall_list, False)			
 		for block in block_hit_list:
 			#Reset position based on the top and bottom of hit object
 			if self.change_y < 0:
 				self.rect.top = block.rect.bottom
+				gf.play_head_hit()
 			else:
 				self.rect.bottom = block.rect.top
 
