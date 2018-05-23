@@ -20,6 +20,7 @@ from level_goal import LevelGoal
 from colors import Colors
 from torch import Torch
 from blind_affect import blind_affect
+import Sounds as sound
 
 
 main_settings = Settings()
@@ -55,14 +56,13 @@ def update_game():
 	check_events()
 
 	if GameStats.start_menu:
-		if not pygame.mixer.Channel(1).get_busy():
-			pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Intro_Song.wav"))
+		if not sound.channel_busy(1):
+			sound.play_intro()
 		show_start_menu()
-		
 		
 	elif GameStats.game_level == 0:
 		play_level_one()
-		pygame.mixer.Channel(1).stop()
+		sound.stop_channel(1)
 		
 	elif GameStats.game_level == 1:
 		play_level_two()
@@ -176,10 +176,10 @@ def make_screen_not_movable():
 	pygame.display.update()
 
 def play_head_hit():
-	pygame.mixer.Channel(7).play(pygame.mixer.Sound("Sounds/Head_Bump.wav"))
+	sound.play_head_hit()
 
 def play_jump():
-	pygame.mixer.Channel(6).play(pygame.mixer.Sound("Sounds/Jump.wav"))
+	sound.play_jump()
 
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
 	'''Show a str fade in/out'''
