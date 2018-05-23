@@ -91,6 +91,7 @@ class Player(DirtySprite):
 		if ((len(block_hit_list) > 0 and not self.crouching) or 
 			(self.rect.bottom >= main_settings.screen_height and not self.crouching)):
 			self.change_y = -10
+			gf.play_jump()
 
 	def crouch(self):
 		if self.change_x < 0:

@@ -178,6 +178,9 @@ def make_screen_not_movable():
 def play_head_hit():
 	pygame.mixer.Channel(7).play(pygame.mixer.Sound("Sounds/Head_Bump.wav"))
 
+def play_jump():
+	pygame.mixer.Channel(6).play(pygame.mixer.Sound("Sounds/Jump.wav"))
+
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
 	'''Show a str fade in/out'''
 
