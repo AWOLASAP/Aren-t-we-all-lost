@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import DirtySprite
 import Game_Functions as gf
+import Sounds as sound
 
 from MainSettings import Settings
 
@@ -75,6 +76,7 @@ class Player(DirtySprite):
 		self.change_x = 0
 		if not self.crouching:
 			self.image = self.player
+		sound.stop_channel(5)
 				
 	def jump(self):
 		"""When the user hits the 'jump' button 
@@ -154,6 +156,8 @@ class Player(DirtySprite):
 			self.rect.center = (100, 625)
 		elif level == 6:
 			self.rect.center = (100, 625)
+		elif level == 7:
+			self.rect.center = (100, 80)
 
 	def update_last_location(self):
 		self.last_x = self.rect.x
@@ -209,7 +213,9 @@ class Player(DirtySprite):
 		elif not self.crouching:
 			self.check_stand_speed()
 
-			
+		if self.change_x != 0:
+			gf.play_slide()
+
 		#Move left/right
 		self.rect.x += self.change_x
 

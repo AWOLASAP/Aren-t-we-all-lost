@@ -14,3 +14,6 @@ def play_jump():
 
 def play_intro():
 	pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Intro_Song.wav"))
+
+def play_slide():
+	pygame.mixer.Channel(5).play(pygame.mixer.Sound("Sounds/Slide.wav"))

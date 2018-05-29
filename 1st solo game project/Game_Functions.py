@@ -181,6 +181,10 @@ def play_head_hit():
 def play_jump():
 	sound.play_jump()
 
+def play_slide():
+	if not sound.channel_busy(5):
+		sound.play_slide()
+
 def fade_text(text_str, fade_in_or_out, fade_time, text_location_x, text_location_y, font_type, blurr):
 	'''Show a str fade in/out'''
 
