@@ -12,8 +12,11 @@ def play_head_hit():
 def play_jump():
 	pygame.mixer.Channel(6).play(pygame.mixer.Sound("Sounds/Jump.wav"))
 
-def play_intro():
-	pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Intro_Song.wav"))
-
 def play_slide():
 	pygame.mixer.Channel(5).play(pygame.mixer.Sound("Sounds/Slide.wav"))
+	
+def play_intro():
+	pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Intro_Song.wav"))
+	
+def play_background_sound():
+	pygame.mixer.Channel(1).play(pygame.mixer.Sound("Music/Background Soundtrack.wav"))

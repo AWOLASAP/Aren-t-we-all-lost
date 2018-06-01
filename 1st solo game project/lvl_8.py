@@ -16,7 +16,7 @@ class Level8(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[100, 200, 400, 25, self.color.BLACK]
+			[0, 300, 500, 25, self.color.BLACK]
 		]
 
 		self.lvl_text = "Get me home"

@@ -61,8 +61,8 @@ def update_game():
 		show_start_menu()
 		
 	elif GameStats.game_level == 0:
-		play_level_one()
 		sound.stop_channel(1)
+		play_level_one()
 		
 	elif GameStats.game_level == 1:
 		play_level_two()
@@ -81,7 +81,9 @@ def update_game():
 
 	elif GameStats.game_level == 6:
 		play_level_seven()
-
+	
+	elif GameStats.game_level == 7:
+		play_level_eight()
 
 	#Set the game to run at 60fps
 	clock.tick(100)
@@ -383,6 +385,9 @@ def update_level():
 	#Allow if there is no text
 	except TypeError:
 		pass
+	
+	if not sound.channel_busy(1):
+		sound.play_background_sound()
 		
 	pygame.display.flip()
 
@@ -447,6 +452,11 @@ def play_level_seven():
 	if GameStats.first_level7:
 		torch.spawn(GameStats.game_level)
 		GameStats.first_level7 == False
+	set_bg_color(color.BLACK)
+	fill_main_screen()
+	update_level()
+
+def play_level_eight():
 	set_bg_color(color.BLACK)
 	fill_main_screen()
 	update_level()
