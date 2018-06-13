@@ -158,6 +158,8 @@ class Player(DirtySprite):
 			self.rect.center = (100, 625)
 		elif level == 7:
 			self.rect.center = (50, 100)
+		elif level == 8:
+			self.rect.center = (50, 100)
 
 	def update_last_location(self):
 		self.last_x = self.rect.x

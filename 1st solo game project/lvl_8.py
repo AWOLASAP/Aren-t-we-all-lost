@@ -16,10 +16,12 @@ class Level8(Level):
 
 		#List of the different walls in the form [x, y, width, height, color]
 		walls = [
-			[0, 300, 500, 25, self.color.BLACK]
+			[0, 675, 1000, 25, self.color.DARKGRAY],
+			[0, 300, 500, 25, self.color.DARKGRAY],
+			[600, 400, 400, 275, self.color.ORANGE]
 		]
 
-		self.lvl_text = "Get me home"
+		self.lvl_text = "I see light"
 		self.lvl_text_image = self.font.render(self.lvl_text, True, self.color.LIGHTGRAY)
 		self.text_location = (500, 50)
 

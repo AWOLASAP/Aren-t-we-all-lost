@@ -374,7 +374,7 @@ def update_level():
 	if GameStats.game_level == 5:
 		blind_affect.update(player)
 
-	if GameStats.game_level == 6:
+	if GameStats.game_level in [6]:
 		main_settings.screen.blit(torch.image, torch.rect)
 		blind_affect.update(player, torch)
 		player.pick_up_item(torch)
@@ -457,6 +457,6 @@ def play_level_seven():
 	update_level()
 
 def play_level_eight():
-	set_bg_color(color.BLACK)
+	set_bg_color(color.GLOOMYGRAY)
 	fill_main_screen()
 	update_level()
